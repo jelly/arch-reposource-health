@@ -13,7 +13,7 @@ def verifysource(pkgbuilds, output):
         _, err = process.communicate()
         if process.returncode != 0:
             pkgbase = os.path.basename(pkgbuild.rstrip('/trunk'))
-            print('{}: source download failed', pkgbase)
+            print('{}: source download failed'.format(pkgbase))
             print(err.decode('utf-8'))
             
         subprocess.run(['git', 'clean', '-f'], cwd=pkgbuild)
