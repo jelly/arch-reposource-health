@@ -9,7 +9,7 @@ import multiprocessing as mp
 def verifysource(pkgbuilds, output):
     print('Verifying {} pkgbuilds'.format(len(pkgbuilds)))
     for pkgbuild in pkgbuilds:
-        process = subprocess.Popen(['makepkg', '--verifysource'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=pkgbuild)
+        process = subprocess.Popen(['makepkg', '--verifysource', '--skippgpcheck'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=pkgbuild)
         _, err = process.communicate()
         if process.returncode != 0:
             pkgbase = os.path.basename(pkgbuild.rstrip('/trunk'))
