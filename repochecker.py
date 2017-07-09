@@ -2,12 +2,14 @@
 
 import glob
 import os
+from datetime import datetime
 import subprocess
 import multiprocessing as mp
 
 
 def verifysource(pkgbuilds, output):
-    print('Verifying {} pkgbuilds'.format(len(pkgbuilds)))
+    start = datetime.now()
+    print('Verifying {} pkgbuilds at {}'.format(len(pkgbuilds), start))
     for pkgbuild in pkgbuilds:
         process = subprocess.Popen(['makepkg', '--verifysource', '--skippgpcheck'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=pkgbuild)
         _, err = process.communicate()
@@ -17,6 +19,8 @@ def verifysource(pkgbuilds, output):
             print(err.decode('utf-8'))
             
         subprocess.run(['git', 'clean', '-f'], cwd=pkgbuild)
+    end = datetime.now()
+    print('Verifying {} pkgbuilds took {}'.format(len(pkgbuilds), end-start))
 
 
 def chunks(l, n=4):
